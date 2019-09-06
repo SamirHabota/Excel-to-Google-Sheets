@@ -54,7 +54,9 @@ function GetSheetArray(name) {
   return result;
 }
 
-async function CopyTemplate(token, tempGID, spreadsheetId, name, array) {
+async function CopyData(token, tempGID, spreadsheetId, name, array) {
+  array.shift();
+  array.shift();
   await delay();
   var sheets = google.sheets("v4");
 
@@ -105,7 +107,7 @@ async function CopyTemplate(token, tempGID, spreadsheetId, name, array) {
               valueInputOption: "RAW",
               data: [
                 {
-                  range: `${name}!A1:U147`,
+                  range: `${name}!A3:U147`,
                   values: array
                 }
               ]
@@ -155,7 +157,7 @@ async function main() {
         //get data from Excel
         var array = await GetSheetArray(name);
         //create sheet, rename sheet, insert data
-        await CopyTemplate(token, tempGID, spreadsheetId, name, array);
+        await CopyData(token, tempGID, spreadsheetId, name, array);
       }
     }
   });
